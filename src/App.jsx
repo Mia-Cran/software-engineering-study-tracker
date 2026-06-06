@@ -1,15 +1,19 @@
 import "./App.css";
+import { Routes, Route } from "react-router";
+import WelcomePage from "./pages/WelcomePage/WelcomePage";
+import HomePage from "./pages/HomePage/HomePage";
+import SavedTopicsPage from "./pages/SavedTopicsPage/SavedTopicsPage";
+import AboutPage from "./pages/AboutPage/AboutPage";
 
 function App() {
   return (
     <main className="app">
-      <section className="app__intro">
-        <h1 className="app__title">Software Engineering Study Tracker</h1>
-        <p className="app__description">
-          Search software engineering concepts, save topics as study cards, and
-          review them later.
-        </p>
-      </section>
+      <Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/saved" element={<SavedTopicsPage />} />
+        <Route path="/about" element={<AboutPage />} />  
+       </Routes>
     </main>
   );
 }
