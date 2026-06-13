@@ -1,7 +1,10 @@
+import "./WelcomePage.css";
+
 function WelcomePage() {
   return (
     <section className="app__intro">
-      <h1 className="app__title">Software Engineering Study Tracker</h1>
+      <h1 className="app__title">Welcome to <br />
+        Your Software Engineering Study Tracker</h1>
       <p className="app__description">
         Search, save, and review software engineering concepts as study cards.
       </p>

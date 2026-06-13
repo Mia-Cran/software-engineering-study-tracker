@@ -1,13 +1,24 @@
 import { Link } from "react-router";
+import "../Header.css";
 
 function Header() {
     return (
-        <nav>
-           <Link to="/home">Home</Link>
-           <Link to="/Welcome">Welcome</Link>
-           <Link to="/saved">Saved Topics</Link>
-           <Link to="/about">About</Link>
+        <header className="header">
+        <nav className="header__nav">
+           <Link className="header__link" to="/">
+            Welcome           
+            </Link>
+           <Link className="header__link" to="/">
+            Home
+            </Link>
+           <Link className="header__link" to="/">
+           Saved Topics
+            </Link>
+           <Link className="header__link" to="/">
+           About
+           </Link>
         </nav>
+        </header>
     )
 }
 
