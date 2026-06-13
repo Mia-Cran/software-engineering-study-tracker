@@ -2,11 +2,41 @@ import { useState } from "react";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [topicResult, setTopicResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSearchSubmit(e) {
+   async function handleSearchSubmit(e) {
     e.preventDefault();
-    console.log(searchQuery);
-  }
+
+    if(!searchQuery.trim()) {
+      setError("Please enter a topic to search.");
+      setTopicResult(null);
+      return;
+    }
+    setIsLoading(true);
+    setError("");
+
+    try {
+    const encodedQuery = encodeURIComponent(searchQuery.trim);
+    const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodedQuery}`;
+    const response = await fetch(url); 
+
+    if (!response.ok) {
+      throw new Error("Topic not found.");
+    }
+
+    const data = await response.json();
+    console.log(data);
+    setTopicResult(data);
+    } catch (err) {
+      console.log(err);
+      setTopicResult(null);
+      setError("Something went wrong. Please try again.");
+    } finally {
+    setIsLoading(false);
+    }
+}
 
   return (
    <section className="home">
@@ -25,6 +55,18 @@ function HomePage() {
         <button className="home__button" type="submit">
           Search</button> 
       </form>
+
+      {isLoading && <p className="home__loading">Loading...</p>}
+
+      {error && <p className="home__error">{error}</p>}
+
+      {topicResult && (        
+        <article>
+         <h2>{topicResult.title}</h2>
+         <p>{topicResult.description}</p>
+         <p>{topicResult.extract}</p>
+        </article>
+      )}
     </section>
   );
 }
