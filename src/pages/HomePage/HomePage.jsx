@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./HomePage.css";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,10 +62,10 @@ function HomePage() {
       {error && <p className="home__error">{error}</p>}
 
       {topicResult && (        
-        <article>
-         <h2>{topicResult.title}</h2>
-         <p>{topicResult.description}</p>
-         <p>{topicResult.extract}</p>
+        <article className="home__card">
+         <h2 className="home__card-title">{topicResult.title}</h2>
+         <p className="home__card-description">{topicResult.description}</p>
+         <p className="home__card-extract">{topicResult.extract}</p>
         </article>
       )}
     </section>

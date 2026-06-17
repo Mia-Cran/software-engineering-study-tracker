@@ -8,13 +8,13 @@ function Header() {
            <Link className="header__link" to="/">
             Welcome           
             </Link>
-           <Link className="header__link" to="/">
+           <Link className="header__link" to="/home">
             Home
             </Link>
-           <Link className="header__link" to="/">
+           <Link className="header__link" to="/saved">
            Saved Topics
             </Link>
-           <Link className="header__link" to="/">
+           <Link className="header__link" to="/about">
            About
            </Link>
         </nav>
