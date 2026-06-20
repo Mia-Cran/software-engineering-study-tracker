@@ -1,3 +1,5 @@
+import StudyCard from "../../components/StudyCard/StudyCard";
+
 function SavedTopicsPage({ savedTopics}) {
   return (
     <section className="app__intro">
@@ -10,11 +12,7 @@ function SavedTopicsPage({ savedTopics}) {
       ) : (
         <div className="saved__topics">
           {savedTopics.map((topic) => (
-            <article  className="home__card" key={topic.title}>
-              <h2 className="home__card-title">{topic.title}</h2>
-              <p className="home__card-description">{topic.description}</p>
-              <p className="home__card-extract">{topic.extract}</p>
-            </article>
+           <StudyCard topic={topic} key={topic.title} />
           ))}
         </div>
       )}

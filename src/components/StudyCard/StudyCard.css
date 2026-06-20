@@ -1,0 +1,32 @@
+.study-card__simple-info {
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+.study-card__subtitle {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.study-card__simple-definition {
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.study-card__example {
+  margin: 0;
+  line-height: 1.5;
+}
+@media screen and (max-width: 600px) {
+    .study-card {
+        padding: 16px;
+    }
+    .study-card__title {
+        font-size: 24px;
+    }
+    .study-card__simple-info {
+        padding: 14px;
+    }
+}

@@ -55,3 +55,20 @@
    text-align: left;
 
 }
+@media screen and (max-width: 600px) {
+  .home__input {
+   flex-directions: column;
+   align-items: center;
+  }
+  .home__input {
+    width: 100%;
+    max-width: 320px;
+  }
+  .home__button {
+    width: 100%;
+    max-width: 320px;
+  }
+  .home__title {
+    font-size: 32px;
+  }
+}
