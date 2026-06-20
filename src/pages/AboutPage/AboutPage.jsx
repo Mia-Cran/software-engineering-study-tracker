@@ -3,19 +3,19 @@ import "./AboutPage.css";
 
 function AboutPage() {
   return (
-    <section className="app">
-      <h1 className="app__title">About This Project</h1>
-      <p className="about__description">
-        I created this Software Engineering Study Tracker to help myself and
-        others learn and review important software engineering concepts.
-      </p>
+    <section className="about">
+      <h1 className="about__title">About This Project</h1>
 
       <p className="about__description">
-        It uses Wikipedia summaries, beginner-friendly explanations, saved study
-        cards, and localStorage to make studying less overwhelming.
+        I created this Study Tracker to make software engineering concepts easier to learn.
+        <br />
+        It uses Wikipedia, simple explanations, saved cards, and localStorage.
       </p>
+
       <div className="about__image-circle">
-        <img className="about__image" src={mariaPhoto} alt="Maria smiling" />
+        <img className="about__image" 
+         src={mariaPhoto} 
+         alt="Maria smiling" />
       </div>
     </section>
   );
