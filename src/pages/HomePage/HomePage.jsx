@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./HomePage.css";
 
-function HomePage() {
+function HomePage({ onSaveTopic }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [topicResult, setTopicResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,7 @@ function HomePage() {
     setError("");
 
     try {
-    const encodedQuery = encodeURIComponent(searchQuery.trim);
+    const encodedQuery = encodeURIComponent(searchQuery.trim());
     const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodedQuery}`;
     const response = await fetch(url); 
 
@@ -66,6 +66,13 @@ function HomePage() {
          <h2 className="home__card-title">{topicResult.title}</h2>
          <p className="home__card-description">{topicResult.description}</p>
          <p className="home__card-extract">{topicResult.extract}</p>
+         <button
+          className="home__save-button"
+          type="button"
+          onClick={() => onSaveTopic(topicResult)}
+          >
+            Save Topic
+          </button>
         </article>
       )}
     </section>
