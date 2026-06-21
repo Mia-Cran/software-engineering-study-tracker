@@ -19,6 +19,14 @@
   margin: 0;
   line-height: 1.5;
 }
+.study-card__save-button {
+  margin-top: 16px;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  cursor: pointer;
+}
 @media screen and (max-width: 600px) {
     .study-card {
         padding: 16px;
