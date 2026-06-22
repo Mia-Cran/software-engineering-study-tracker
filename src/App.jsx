@@ -23,22 +23,36 @@ function App() {
   }, [savedTopics]);
 
   function handleSaveTopic(topic) {
-    setSavedTopics((prevTopics) => [...prevTopics, topic]);
+    setSavedTopics((prevTopics) => {
+      const alreadySaved = prevTopics.some(
+        (savedTopic) => savedTopic.title === topic.title
+      );
+
+      if (alreadySaved) {
+        return prevTopics;
+      }
+
+      return [...prevTopics, topic];
+    });
   }
 
   return (
     <main className="app">
       <Header />
       <Routes>
-        <Route path="/" element={<WelcomePage />}/>
-        <Route path="/home" element={<HomePage onSaveTopic={handleSaveTopic} />}/>
-        <Route path="/saved" element={<SavedTopicsPage savedTopics={savedTopics} />}/>
-        <Route path="/about" element={<AboutPage />}/>  
-       </Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route
+          path="/home"
+          element={<HomePage onSaveTopic={handleSaveTopic} />}
+        />
+        <Route
+          path="/saved"
+          element={<SavedTopicsPage savedTopics={savedTopics} />}
+        />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
     </main>
   );
 }
-
-
 
 export default App;

@@ -1,10 +1,11 @@
 import StudyCard from "../../components/StudyCard/StudyCard";
+import "./SavedTopicsPage.css";
 
-function SavedTopicsPage({ savedTopics}) {
+function SavedTopicsPage({ savedTopics }) {
   return (
-    <section className="app__intro">
-      <h1 className="app__title">Saved Topics</h1>
-      <p className="app__description">
+    <section className="saved">
+      <h1 className="saved__title">Saved Topics</h1>
+      <p className="saved__description">
         View and review your saved software engineering concepts.
       </p>
       {savedTopics.length === 0 ? (
@@ -12,7 +13,7 @@ function SavedTopicsPage({ savedTopics}) {
       ) : (
         <div className="saved__topics">
           {savedTopics.map((topic) => (
-           <StudyCard topic={topic} key={topic.title} />
+            <StudyCard topic={topic} key={topic.title} />
           ))}
         </div>
       )}

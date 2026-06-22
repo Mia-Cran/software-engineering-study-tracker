@@ -40,7 +40,7 @@ function HomePage({ onSaveTopic }) {
     } catch (err) {
       console.log(err);
       setTopicResult(null);
-      setError("Something went wrong. Please try again.");
+      setError("Something went wrong. Please try another search.");
     } finally {
       setIsLoading(false);
     }
