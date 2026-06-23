@@ -1,0 +1,42 @@
+.saved {
+  width: 100%;
+  max-width: 900px;
+  padding-top: 60px;
+  text-align: center;
+}
+
+.saved__title {
+  margin: 0 0 16px;
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+.saved__description {
+  margin: 0 auto 32px;
+  max-width: 650px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.saved__empty {
+  font-size: 18px;
+}
+
+.saved__topics {
+  display: grid;
+  gap: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .saved {
+    padding-top: 40px;
+  }
+
+  .saved__title {
+    font-size: 32px;
+  }
+
+  .saved__description {
+    font-size: 16px;
+  }
+}
