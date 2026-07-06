@@ -1,0 +1,34 @@
+const mongoose = require("mongoose");
+
+const topicSchema = new mongoose.Schema({
+    term: {
+        type: String,
+        required: true,
+    },
+    simpleDefinition: {
+        type: String,
+        required: true,
+    },
+    beginnerDefinition: {
+        type: String,
+        required: true,
+    },
+    technicalDefinition: {
+        type: String,
+        required: true,
+    },
+    category: {
+        type: String,
+        required: true,
+    },
+    difficulty: {
+        type: String,
+        required: true,
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+})
+
+module.exports = mongoose.model("Topic", topicSchema);
