@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const auth = require("../middleware/auth");
 
 const { 
     getTopics, 
@@ -9,7 +10,7 @@ const {
 } = require("../controllers/topics");
 
 router.get("/", getTopics);
-router.post("/", createTopic);
+router.post("/", auth, createTopic);
 router.get("/:id", getTopicById);
 router.put("/:id", updateTopic);
 router.delete("/:id", deleteTopic);
