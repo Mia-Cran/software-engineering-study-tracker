@@ -1,7 +1,7 @@
 const Topic = require("../models/topic");
 
 const getTopics = (req, res) => {
-  Topic.find({})
+  Topic.find({ owner: req.user._id })
     .then((topics) => {
       res.send(topics);
     })
@@ -14,7 +14,10 @@ const getTopics = (req, res) => {
 const getTopicById = (req, res) => {
   const { id } = req.params;
 
-  Topic.findById(id)
+  Topic.findOne({
+    _id: id,
+    owner: req.user._id,
+  })
     .then((topic) => {
       if (!topic) {
         return res.status(404).send({ message: "Topic not found" });
@@ -36,7 +39,10 @@ const getTopicById = (req, res) => {
 const deleteTopic = (req, res) => {
   const { id } = req.params;
 
-  Topic.findByIdAndDelete(id)
+  Topic.findOneAndDelete({
+    _id: id,
+    owner: req.user._id,
+  })
     .then((topic) => {
       if (!topic) {
         return res.status(404).send({ message: "Topic not found" });
@@ -58,10 +64,17 @@ const deleteTopic = (req, res) => {
 const updateTopic = (req, res) => {
   const { id } = req.params;
 
-  Topic.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
-  })
+  Topic.findOneAndUpdate(
+    {
+      _id: id,
+      owner: req.user._id,
+    },
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
     .then((topic) => {
       if (!topic) {
         return res.status(404).send({ message: "Topic not found" });
@@ -97,7 +110,7 @@ const createTopic = (req, res) => {
     technicalDefinition,
     category,
     difficulty,
-    owner: "000000000000000000000000",
+    owner: req.user._id,
   })
     .then((topic) => {
       res.status(201).send(topic);

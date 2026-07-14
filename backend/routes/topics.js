@@ -9,11 +9,11 @@ const {
     updateTopic,
 } = require("../controllers/topics");
 
-router.get("/", getTopics);
+router.get("/", auth, getTopics);
 router.post("/", auth, createTopic);
-router.get("/:id", getTopicById);
-router.put("/:id", updateTopic);
-router.delete("/:id", deleteTopic);
-router.patch("/:id", updateTopic);
+router.get("/:id", auth,  getTopicById);
+router.put("/:id", auth, updateTopic);
+router.delete("/:id", auth, deleteTopic);
+router.patch("/:id", auth,  updateTopic);
 
 module.exports = router;
