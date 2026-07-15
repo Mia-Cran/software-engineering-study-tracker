@@ -1,7 +1,7 @@
 import StudyCard from "../../components/StudyCard/StudyCard";
 import "./SavedTopicsPage.css";
 
-function SavedTopicsPage({ savedTopics }) {
+function SavedTopicsPage({ savedTopics, onDeleteTopic }) {
   return (
     <section className="saved">
       <h1 className="saved__title">Saved Topics</h1>
@@ -13,7 +13,20 @@ function SavedTopicsPage({ savedTopics }) {
       ) : (
         <div className="saved__topics">
           {savedTopics.map((topic) => (
-            <StudyCard topic={topic} key={topic.title} />
+            <StudyCard
+              key={topic._id}
+              topic={{
+                ...topic,
+                title: topic.term,
+                description: "",
+                extract: "",
+                studyInfo: {
+                  simpleDefinition: topic.simpleDefinition,
+                  example: topic.beginnerDefinition,
+                },
+              }}
+              onDeleteTopic={onDeleteTopic}
+            />
           ))}
         </div>
       )}

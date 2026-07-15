@@ -1,6 +1,23 @@
 import "./StudyCard.css";
+import { useState } from "react";
 
-function StudyCard({ topic, onSaveTopic }) {
+function StudyCard({ topic, onSaveTopic, onDeleteTopic }) {
+  const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSaveTopic = async () => {
+    setIsSaving(true);
+
+    try {
+      await onSaveTopic(topic);
+      setIsSaved(true);
+    } catch (err) {
+      console.error("Failed to save topic:", err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <article className="study-card">
       <h2 className="study-card__title">{topic.title}</h2>
@@ -21,9 +38,20 @@ function StudyCard({ topic, onSaveTopic }) {
         <button
           className="study-card__save-button"
           type="button"
-          onClick={() => onSaveTopic(topic)}
+          onClick={handleSaveTopic}
+          disabled={isSaving || isSaved}
         >
-          Save Topic
+          {isSaving ? "Saving..." : isSaved ? "Saved ✓" : "Save Topic"}
+        </button>
+      )}
+
+      {onDeleteTopic && (
+        <button
+          className="study-card__delete-button"
+          type="button"
+          onClick={() => onDeleteTopic(topic._id)}
+        >
+          Delete Topic
         </button>
       )}
     </article>

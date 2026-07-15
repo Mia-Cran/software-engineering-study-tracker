@@ -8,46 +8,153 @@ import Header from "./components/Header/Header";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [savedTopics, setSavedTopics] = useState(() => {
-    const storedTopics = localStorage.getItem("savedTopics");
+  const [savedTopics, setSavedTopics] = useState([]);
 
-    if (storedTopics) {
-      return JSON.parse(storedTopics);
-    }
+  function loadTopics(token) {
+    return fetch("http://localhost:3001/topics", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to load topics");
+        }
 
-    return [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("savedTopics", JSON.stringify(savedTopics));
-  }, [savedTopics]);
-
-  function handleSaveTopic(topic) {
-    setSavedTopics((prevTopics) => {
-      const alreadySaved = prevTopics.some(
-        (savedTopic) => savedTopic.title === topic.title
-      );
-
-      if (alreadySaved) {
-        return prevTopics;
-      }
-
-      return [...prevTopics, topic];
-    });
+        return res.json();
+      })
+      .then((topics) => {
+        setSavedTopics(topics);
+        return topics;
+      });
   }
 
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+
+    if (!token) {
+      return;
+    }
+
+    loadTopics(token).catch((err) => {
+      console.error(err);
+    });
+  }, []);
+
+  function handleSignin(email, password) {
+    return fetch("http://localhost:3001/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Signin failed");
+        }
+
+        return res.json();
+      })
+      .then((data) => {
+        localStorage.setItem("jwt", data.token);
+
+        return loadTopics(data.token).then(() => {
+          return data.token;
+        });
+      });
+  }
+  function handleSaveTopic(topic) {
+    const token = localStorage.getItem("jwt");
+
+    const backendTopic = {
+      term: topic.title,
+      simpleDefinition: topic.extract,
+      beginnerDefinition: topic.extract,
+      technicalDefinition: topic.extract,
+      category: "General",
+      difficulty: "beginner",
+    };
+
+    return fetch("http://localhost:3001/topics", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(backendTopic),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to save topic");
+        }
+
+        return res.json();
+      })
+      .then((savedTopic) => {
+        setSavedTopics((prevTopics) => {
+          const alreadySaved = prevTopics.some(
+            (topic) => topic._id === savedTopic._id,
+          );
+
+          if (alreadySaved) {
+            return prevTopics;
+          }
+
+          return [...prevTopics, savedTopic];
+        });
+
+        return savedTopic;
+      })
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
+  }
+
+  function handleDeleteTopic(topicId) {
+    const token = localStorage.getItem("jwt");
+
+    return fetch(`http://localhost:3001/topics/${topicId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to delete topic");
+        }
+
+        return res.json();
+      })
+      .then(() => {
+        setSavedTopics((prevTopics) =>
+          prevTopics.filter((topic) => topic._id !== topicId),
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
+  }
   return (
     <main className="app">
       <Header />
       <Routes>
-        <Route path="/" element={<WelcomePage />} />
+        <Route path="/" element={<WelcomePage onSignin={handleSignin} />} />
         <Route
           path="/home"
           element={<HomePage onSaveTopic={handleSaveTopic} />}
         />
         <Route
           path="/saved"
-          element={<SavedTopicsPage savedTopics={savedTopics} />}
+          element={
+            <SavedTopicsPage
+              savedTopics={savedTopics}
+              onDeleteTopic={handleDeleteTopic}
+            />
+          }
         />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
