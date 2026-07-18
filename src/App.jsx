@@ -64,6 +64,32 @@ function App() {
         });
       });
   }
+
+  function handleSignup(name, email, password) {
+    return fetch("http://localhost:3001/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Signup failed");
+        }
+
+        return res.json();
+      })
+      .then(() => {
+        return handleSignin(email, password);
+      });
+  }
+
+  function handleSignout() {
+    localStorage.removeItem("jwt");
+    setSavedTopics([]);
+  }
+
   function handleSaveTopic(topic) {
     const token = localStorage.getItem("jwt");
 
@@ -140,9 +166,14 @@ function App() {
   }
   return (
     <main className="app">
-      <Header />
+      <Header onSignout={handleSignout} />
       <Routes>
-        <Route path="/" element={<WelcomePage onSignin={handleSignin} />} />
+        <Route
+          path="/"
+          element={
+            <WelcomePage onSignin={handleSignin} onSignup={handleSignup} />
+          }
+        />
         <Route
           path="/home"
           element={<HomePage onSaveTopic={handleSaveTopic} />}

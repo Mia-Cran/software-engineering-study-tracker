@@ -1,7 +1,14 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import "./Header.css";
 
-function Header() {
+function Header({ onSignout }) {
+  const navigate = useNavigate();
+
+  function handleSignoutClick() {
+    onSignout();
+    navigate("/");
+  }
+
   return (
     <header className="header">
       <nav className="header__nav">
@@ -17,6 +24,9 @@ function Header() {
         <Link className="header__link" to="/about">
           About
         </Link>
+        <button type="button" onClick={handleSignoutClick}>
+          Sign Out
+        </button>
       </nav>
     </header>
   );
