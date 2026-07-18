@@ -9,6 +9,9 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [savedTopics, setSavedTopics] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    Boolean(localStorage.getItem("jwt")),
+  );
 
   function loadTopics(token) {
     return fetch("http://localhost:3001/topics", {
@@ -58,6 +61,7 @@ function App() {
       })
       .then((data) => {
         localStorage.setItem("jwt", data.token);
+        setIsLoggedIn(true);
 
         return loadTopics(data.token).then(() => {
           return data.token;
@@ -88,6 +92,7 @@ function App() {
   function handleSignout() {
     localStorage.removeItem("jwt");
     setSavedTopics([]);
+    setIsLoggedIn(false);
   }
 
   function handleSaveTopic(topic) {
@@ -166,7 +171,7 @@ function App() {
   }
   return (
     <main className="app">
-      <Header onSignout={handleSignout} />
+      <Header isLoggedIn={isLoggedIn} onSignout={handleSignout} />
       <Routes>
         <Route
           path="/"

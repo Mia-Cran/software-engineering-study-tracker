@@ -1,6 +1,6 @@
 import "./WelcomePage.css";
 import welcomeImage from "../../assets/welcome-study.png";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useState } from "react";
 
 function WelcomePage({ onSignin, onSignup }) {
@@ -8,6 +8,7 @@ function WelcomePage({ onSignin, onSignup }) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  const [activeForm, setActiveForm] = useState(null);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -51,6 +52,24 @@ function WelcomePage({ onSignin, onSignup }) {
           Search, save, and review software engineering concepts as study cards.
         </p>
 
+        <div className="app__auth-options">
+          <button
+            type="button"
+            className="app__auth-link"
+            onClick={() => setActiveForm("signin")}
+          >
+            Sign In
+          </button>
+
+          <button
+            type="button"
+            className="app__auth-link"
+            onClick={() => setActiveForm("signup")}
+          >
+            Create Account
+          </button>
+        </div>
+      {activeForm === "signin" && (
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -70,7 +89,8 @@ function WelcomePage({ onSignin, onSignup }) {
 
           <button type="submit">Sign In</button>
         </form>
-
+      )}
+      {activeForm === "signup" && (
         <form onSubmit={handleSignup}>
           <input
             type="text"
@@ -98,10 +118,7 @@ function WelcomePage({ onSignin, onSignup }) {
 
           <button type="submit">Create Account</button>
         </form>
-
-        <Link className="app__start-button" to="/home">
-          Start Studying
-        </Link>
+      )} 
       </div>
     </section>
   );
