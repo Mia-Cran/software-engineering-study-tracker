@@ -2,10 +2,16 @@ const mongoose = require("mongoose");
 const app = require("./app");
 require("dotenv").config();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
+console.log(
+  "Mongo target:",
+  process.env.MONGODB_URI?.startsWith("mongodb+srv://")
+    ? "Atlas"
+    : process.env.MONGODB_URI
+);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/study_tracker_db")
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
   })
