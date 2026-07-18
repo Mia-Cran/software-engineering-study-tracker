@@ -14,7 +14,7 @@ function App() {
   );
 
   function loadTopics(token) {
-    return fetch("http://localhost:3001/topics", {
+    return fetch("https://software-engineering-study-tracker.onrender.com/topics", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,7 +45,7 @@ function App() {
   }, []);
 
   function handleSignin(email, password) {
-    return fetch("http://localhost:3001/signin", {
+    return fetch("https://software-engineering-study-tracker.onrender.com/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ function App() {
   }
 
   function handleSignup(name, email, password) {
-    return fetch("http://localhost:3001/signup", {
+    return fetch("https://software-engineering-study-tracker.onrender.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +107,7 @@ function App() {
       difficulty: "beginner",
     };
 
-    return fetch("http://localhost:3001/topics", {
+    return fetch("https://software-engineering-study-tracker.onrender.com/topics", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -146,7 +146,7 @@ function App() {
   function handleDeleteTopic(topicId) {
     const token = localStorage.getItem("jwt");
 
-    return fetch(`http://localhost:3001/topics/${topicId}`, {
+    return fetch(`https://software-engineering-study-tracker.onrender.com/topics/${topicId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

@@ -26,7 +26,6 @@ const createUser = (req, res) => {
       res.status(500).send({ message: "Failed to create user" });
     });
 };
-
 const login = (req, res) => {
   const { email, password } = req.body;
 
@@ -46,13 +45,21 @@ const login = (req, res) => {
           });
         }
 
-        const token = jwt.sign
-         ({ _id: user._id }, 
-         process.env.JWT_SECRET, {
+        if (!process.env.JWT_SECRET) {
+          throw new Error("JWT_SECRET is missing");
+        }
+
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
           expiresIn: "7d",
         });
 
         return res.send({ token });
+      });
+    })
+    .catch((err) => {
+      console.error("Signin error:", err);
+      return res.status(500).send({
+        message: "Failed to sign in",
       });
     });
 };
