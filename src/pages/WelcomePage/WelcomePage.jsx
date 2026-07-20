@@ -9,6 +9,7 @@ function WelcomePage({ onSignin, onSignup }) {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const [activeForm, setActiveForm] = useState(null);
+  const [isSigningUp, setIsSigningUp] = useState(false);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -24,6 +25,7 @@ function WelcomePage({ onSignin, onSignup }) {
 
   function handleSignup(event) {
     event.preventDefault();
+    setIsSigningUp(true);
 
     onSignup(name, email, password)
       .then(() => {
@@ -31,6 +33,9 @@ function WelcomePage({ onSignin, onSignup }) {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        setIsSigningUp(false);
       });
   }
 
@@ -61,64 +66,60 @@ function WelcomePage({ onSignin, onSignup }) {
             Sign In
           </button>
 
-          <button
-            type="button"
-            className="app__auth-link"
-            onClick={() => setActiveForm("signup")}
-          >
-            Create Account
+          <button type="submit" disabled={isSigningUp}>
+            {isSigningUp ? "Creating account..." : "Create Account"}
           </button>
         </div>
-      {activeForm === "signin" && (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="Email"
-            required
-          />
+        {activeForm === "signin" && (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="Email"
+              required
+            />
 
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="Password"
-            required
-          />
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Password"
+              required
+            />
 
-          <button type="submit">Sign In</button>
-        </form>
-      )}
-      {activeForm === "signup" && (
-        <form onSubmit={handleSignup}>
-          <input
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            placeholder="Name"
-            required
-          />
+            <button type="submit">Sign In</button>
+          </form>
+        )}
+        {activeForm === "signup" && (
+          <form onSubmit={handleSignup}>
+            <input
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              placeholder="Name"
+              required
+            />
 
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="Email"
-            required
-          />
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="Email"
+              required
+            />
 
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="Password"
-            required
-          />
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Password"
+              required
+            />
 
-          <button type="submit">Create Account</button>
-        </form>
-      )} 
+            <button type="submit">Create Account</button>
+          </form>
+        )}
       </div>
     </section>
   );
