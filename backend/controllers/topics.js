@@ -103,26 +103,44 @@ const createTopic = (req, res) => {
     difficulty,
   } = req.body;
 
-  Topic.create({
-    term,
-    simpleDefinition,
-    beginnerDefinition,
-    technicalDefinition,
-    category,
-    difficulty,
+  const normalizedTerm = term.trim().toLowerCase();
+
+  return Topic.findOne({
+    normalizedTerm,
     owner: req.user._id,
   })
-    .then((topic) => {
-      res.status(201).send(topic);
+    .then((existingTopic) => {
+      if (existingTopic) {
+        return res.status(409).send({
+          message: "Topic already saved",
+        });
+      }
+
+      return Topic.create({
+        term,
+        normalizedTerm,
+        simpleDefinition,
+        beginnerDefinition,
+        technicalDefinition,
+        category,
+        difficulty,
+        owner: req.user._id,
+      }).then((topic) => {
+        return res.status(201).send(topic);
+      });
     })
     .catch((err) => {
       console.error(err);
 
       if (err.name === "ValidationError") {
-        return res.status(400).send({ message: "Invalid topic data" });
+        return res.status(400).send({
+          message: "Invalid topic data",
+        });
       }
 
-      return res.status(500).send({ message: "Error creating topic" });
+      return res.status(500).send({
+        message: "Error creating topic",
+      });
     });
 };
 
