@@ -66,8 +66,12 @@ function WelcomePage({ onSignin, onSignup }) {
             Sign In
           </button>
 
-          <button type="submit" disabled={isSigningUp}>
-            {isSigningUp ? "Creating account..." : "Create Account"}
+          <button
+            type="button"
+            className="app__auth-link"
+            onClick={() => setActiveForm("signup")}
+          >
+            Create Account
           </button>
         </div>
         {activeForm === "signin" && (
