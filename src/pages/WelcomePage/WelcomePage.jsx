@@ -57,23 +57,25 @@ function WelcomePage({ onSignin, onSignup }) {
           Search, save, and review software engineering concepts as study cards.
         </p>
 
-        <div className="app__auth-options">
-          <button
-            type="button"
-            className="app__auth-link"
-            onClick={() => setActiveForm("signin")}
-          >
-            Sign In
-          </button>
+        {activeForm === null && (
+          <div className="app__auth-options">
+            <button
+              type="button"
+              className="app__auth-link"
+              onClick={() => setActiveForm("signin")}
+            >
+              Sign In
+            </button>
 
-          <button
-            type="button"
-            className="app__auth-link"
-            onClick={() => setActiveForm("signup")}
-          >
-            Create Account
-          </button>
-        </div>
+            <button
+              type="button"
+              className="app__auth-link"
+              onClick={() => setActiveForm("signup")}
+            >
+              Create Account
+            </button>
+          </div>
+        )}
         {activeForm === "signin" && (
           <form onSubmit={handleSubmit}>
             <input
@@ -121,7 +123,9 @@ function WelcomePage({ onSignin, onSignup }) {
               required
             />
 
-            <button type="submit">Create Account</button>
+            <button type="submit" disabled={isSigningUp}>
+              {isSigningUp ? "Creating account..." : "Create Account"}
+            </button>
           </form>
         )}
       </div>
