@@ -1,0 +1,60 @@
+.app__text {
+  margin-top: -100px;
+}
+.app__image {
+  display: block;
+  width: 260px;
+  max-width: 100%;
+  margin: 0 auto 16px;
+}
+.app__start-button {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  background-color: #f9a8d4;
+  color: #2f2f3a;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.app__start-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(47, 47, 58, 0.12);
+}
+
+.app__auth-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.app__auth-link {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #2f2f3a;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.app__auth-link:hover {
+  opacity: 0.7;
+}
+@media screen and (max-width: 600px) {
+  .app__image {
+    width: 200px;
+  }
+  .app__title {
+    font-size: 32px;
+  }
+  .app__description {
+    font-size: 16px;
+  }
+}
