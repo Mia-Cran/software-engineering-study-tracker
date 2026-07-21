@@ -45,7 +45,7 @@ function App() {
   }, []);
 
   function handleSignin(email, password) {
-    return fetch("https://software-engineering-study-tracker.onrender.com/signin", {
+    return fetch("http://localhost:3001/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +107,7 @@ function App() {
       difficulty: "beginner",
     };
 
-    return fetch("https://software-engineering-study-tracker.onrender.com/topics", {
+    return fetch("http://localhost:3001/topics", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
