@@ -1,0 +1,40 @@
+.header {
+  width: 100%;
+  padding: 16px 0;
+  margin: 0 auto 32px;
+ 
+}
+
+.header__nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  padding-right: 20px;
+}
+
+
+.header__link {
+  padding: 10px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2f2f3a;
+  background-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 12px rgba(47, 47, 58, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header__link:hover {
+  outline: 2px solid #2f2f3a;
+  outline-offset: 3px;
+}
+
+@media screen and (max-width: 600px) {
+  .header__nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    transform: translateX(0);
+  }
+}
